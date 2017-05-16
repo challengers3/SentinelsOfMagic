@@ -41,7 +41,7 @@ npm install
 
 -Install Postgre on your machine in whatever manner suites you.
 
-### Create a database called fridgr in PSQL
+#### Create a database called fridgr in PSQL
 Use PSQL:
 ```sh
 psql
@@ -51,30 +51,27 @@ Create database:
 CREATE DATABASE fridgr;
 ```
 
-### Create a user (e.g. fridgr_app) with a password:
+#### Create a user (e.g. fridgr_app) with a password:
 ```sh
 CREATE USER fridgr_app WITH PASSWORD 'trustno1';
 ```
 
-### Grant this user permissions to access the database 
-`fridgr`
+#### Grant this user permissions to access the database 
 
 ```sh
 psql -U fridgr_app -h 127.0.0.1 -W fridgr < ./database/fridgr.sql
 ```
 -U tells psql to run command as user (like MySQL, note capital)
-
 -h tells psql to make connection as if it were a server, this makes user access consistent with server access, and should save you from having to create two users, let me know if there are issues here
-
 -W makes psql ask for password
 
-Now that the database is created and running, create a config.js file in your database directory that module exports the string
-
-'postgres://USERNAME:PASSWORD@localhost:5432/fridgr'
-
+Create a config.js file in the project database directory (e.g., SentinelsOfMagic/database) that module exports the string
+```sh
+export 'postgres://USERNAME:PASSWORD@localhost:5432/fridgr'
+```
 with appropriate replacements for username and password.
 
-Now when running on your dev machine this will be used for database connection, else the heroku DATABASE_URL environment variable will be used.
+When running on your dev machine this will be used for database connection, else the heroku DATABASE_URL environment variable will be used.
 
 For deployment to heroku, look up pg:push. Note: user will need schema permissions.
 
