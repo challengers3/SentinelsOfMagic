@@ -71,7 +71,7 @@ psql -U fridgr_app -h 127.0.0.1 -W fridgr < ./database/fridgr.sql
 
 Create a config.js file in the project database directory (e.g., fridgr/database/config.js) with the following line. USERNAME and PASSWORD should be the username and password you specified when you created a user.
 ```sh
-'postgres://USERNAME:PASSWORD@localhost:5432/fridgr'
+module.exports='postgres://fridgr_app:USERNAME@PASSWORD:5432/fridgr';
 ```
 
 When running on your dev machine this will be used for database connection, else the heroku DATABASE_URL environment variable will be used.
