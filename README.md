@@ -67,7 +67,7 @@ psql -U fridgr_app -h 127.0.0.1 -W fridgr < ./database/fridgr.sql
 
 Create a config.js file in the project database directory (e.g., SentinelsOfMagic/database/config.js) with the following line:
 ```sh
-export 'postgres://USERNAME:PASSWORD@localhost:5432/fridgr'
+'postgres://USERNAME:PASSWORD@localhost:5432/fridgr'
 ```
 
 When running on your dev machine this will be used for database connection, else the heroku DATABASE_URL environment variable will be used.
