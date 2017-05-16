@@ -29,6 +29,7 @@
     "cookie-parser": "^1.4.3",
     "crypto": "0.0.3",
     "express": "^4.15.2",
+    "image-webpack-loader": "^3.3.1",
     "jquery": "^3.2.1",
     "material-ui": "^0.18.0",
     "nodemon": "^1.11.0",
@@ -43,7 +44,12 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
+    "eslint": "^3.19.0",
+    "eslint-config-airbnb": "^15.0.1",
     "eslint-config-hackreactor": "git://github.com/reactorcore/eslint-config-hackreactor",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^5.0.1",
+    "eslint-plugin-react": "^7.0.1",
     "mocha": "^3.3.0",
     "node-mocks-http": "^1.6.2"
   },
