@@ -1,4 +1,4 @@
-# fridgr
+# fridgr 
 Tracking groceries got you stressed? Chill.
 
 ## Team
@@ -41,13 +41,23 @@ npm install
 
 -Install Postgre on your machine in whatever manner suites you.
 
--Create a database called fridgr in PSQL
+### Create a database called fridgr in PSQL
+Use PSQL:
+```sh
+psql
+```
+Create database:
+```sh
+CREATE DATABASE fridgr;
+```
 
--Create a user (e.g. fridgr_app) with a password
+### Create a user (e.g. fridgr_app) with a password:
+```sh
+CREATE USER fridgr_app WITH PASSWORD 'trustno1';
+```
 
--Grant this user permissions to access the database `fridgr`
-
--From project root run
+### Grant this user permissions to access the database 
+`fridgr`
 
 ```sh
 psql -U fridgr_app -h 127.0.0.1 -W fridgr < ./database/fridgr.sql
