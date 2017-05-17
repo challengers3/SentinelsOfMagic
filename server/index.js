@@ -122,6 +122,11 @@ app.post('/undo', (req, res) => {
     .catch(err => console.log(`Unable to update item_id = ${req.body.itemId} to need_to_restock = false in HOUSES_ITEMS: `, err));
 });
 
+app.post('/query', (req, res) => {
+  console.log(`Successful click: ${req.body.itemName}`);
+  res.sendStatus(201);
+});
+
 app.post('/checkUsers', function(req, res) {
   db.query('SELECT * FROM users WHERE house_id=${houseId}', { houseId: req.body.houseId })
      .then((data) => {

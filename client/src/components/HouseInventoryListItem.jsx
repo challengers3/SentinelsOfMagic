@@ -72,12 +72,19 @@ class HouseInventoryListItem extends React.Component {
       .catch(err => console.log('Bad POST request to /unclaim'));
   }
 
+  clickFoodName(event) {
+    axios.post('/query', { itemName: this.state.name })
+      .then(res => {
+        console.log('Successful POST request to /unclaim');  
+      }).catch(err => console.log('Bad POST request to /query'));
+  }
+
   render() {
     if (!this.state.needToRestock) {
       return (
         <div className="item">
           <h1>😊</h1>
-          <h4 className="item-name">{this.state.name}</h4>
+          <h4 className="item-name" onClick={this.clickFoodName.bind(this)}>{this.state.name}</h4>
           <h5 className="item-notes">{this.state.notes}</h5>
           <RaisedButton primary={true} label="Need to restock" onClick={this.clickRestock.bind(this)}></RaisedButton>
         </div>
@@ -86,7 +93,7 @@ class HouseInventoryListItem extends React.Component {
       return (
         <div className="item">
           <h1>😨</h1>
-          <h4 className="item-name">{this.state.name}</h4>
+          <h4 className="item-name">{this.state.name}</h4>  
           <h5 className="item-notes">{this.state.notes}</h5>
           <RaisedButton primary={true} label="Claim" onClick={this.clickClaim.bind(this)}></RaisedButton>
           <RaisedButton label="Undo" onClick={this.clickUndo.bind(this)}></RaisedButton>
