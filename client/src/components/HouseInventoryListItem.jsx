@@ -3,6 +3,7 @@ import axios from 'axios';
 import { GridList, GridTile } from 'material-ui/GridList';
 import RaisedButton from 'material-ui/RaisedButton';
 
+import NutritionInfo from './NutritionalInfo.jsx';
 class HouseInventoryListItem extends React.Component {
   constructor(props) {
     super(props);
@@ -14,8 +15,11 @@ class HouseInventoryListItem extends React.Component {
       needToRestock: this.props.item.needtorestock,
       username: this.props.item.username,
       userId: this.props.userId,
-      itemUserId: this.props.item.userid
+      itemUserId: this.props.item.userid,
+      toggleNutrition: false,
     };
+
+    this.clickFoodName = this.clickFoodName.bind(this);
   }
 
   clickRestock(event) {
@@ -72,21 +76,36 @@ class HouseInventoryListItem extends React.Component {
       .catch(err => console.log('Bad POST request to /unclaim'));
   }
 
+  clickFoodName(event) {
+    axios.post('/query', { itemName: this.state.name })
+      .then(res => {
+        console.log('Successful POST request to /query');  
+      }).catch(err => console.log('Bad POST request to /query'));
+    
+    this.setState({
+      toggleNutrition: !this.state.toggleNutrition,
+    });
+
+  }
+
   render() {
     if (!this.state.needToRestock) {
       return (
         <div className="item">
           <h1>😊</h1>
-          <h4 className="item-name">{this.state.name}</h4>
+          <h4 className="item-name" onClick={this.clickFoodName.bind(this)}>{this.state.name}</h4>
           <h5 className="item-notes">{this.state.notes}</h5>
           <RaisedButton primary={true} label="Need to restock" onClick={this.clickRestock.bind(this)}></RaisedButton>
+          <NutritionInfo 
+          clickFoodName={this.clickFoodName}
+          toggle={this.state.toggleNutrition} />
         </div>
       );
     } else if (this.state.needToRestock && this.state.username === null) {
       return (
         <div className="item">
           <h1>😨</h1>
-          <h4 className="item-name">{this.state.name}</h4>
+          <h4 className="item-name">{this.state.name}</h4>  
           <h5 className="item-notes">{this.state.notes}</h5>
           <RaisedButton primary={true} label="Claim" onClick={this.clickClaim.bind(this)}></RaisedButton>
           <RaisedButton label="Undo" onClick={this.clickUndo.bind(this)}></RaisedButton>

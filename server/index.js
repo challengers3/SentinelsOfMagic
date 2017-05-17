@@ -7,6 +7,7 @@ let path = require('path');
 var cookieParser = require('cookie-parser');
 var utils = require('./lib/inventoryUtils.js');
 var assignCookie = require('./middleware/assignCookie');
+var axios = require('axios');
 
 let checkAuth = require('./middleware/authorizedRequest.js');
 
@@ -120,6 +121,35 @@ app.post('/undo', (req, res) => {
       res.sendStatus(201);
     })
     .catch(err => console.log(`Unable to update item_id = ${req.body.itemId} to need_to_restock = false in HOUSES_ITEMS: `, err));
+});
+
+app.post('/query', (req, res) => {
+  let input = JSON.stringify(req.body.itemName);
+
+  axios({
+    method: 'post',
+    headers: {'Content-Type': 'application/json'},
+    url: 'https://api.nutritionix.com/v1_1/search',
+    data: {
+      'appId': '3be6cfc0',
+      'appKey': 'c22613a400bedc4a18299e65c0bb7333',  
+      'query': input,
+      'results': '0:1',
+      'fields': ['item_name', 'brand_name', 'nf_calories', 'nf_serving_size_qty', 'nf_serving_size_unit'],
+      'sort': {
+        'field': '_score',
+        'order': 'desc'
+      },
+      'filters': {
+        'item_type': 2
+      }
+    }
+  }).then((response) => {
+    console.log('Successful API query: ', response.data);
+    res.sendStatus(201);
+    res.end();
+  })
+  .catch(err => console.log('Unsuccessful query: ', err));
 });
 
 app.post('/checkUsers', function(req, res) {
